@@ -1,5 +1,15 @@
 import random
 import math
+import re
+
+
+def chk_is_whitespace(name) -> bool:
+    test = re.search(r'\,[ \t]+\,|\,[ \t]+$', name)
+    if test is None:
+        output = False
+    else:
+        output = True
+    return output
 
 
 class Player:
@@ -41,7 +51,7 @@ class Match:
         self.state = self.NOT_PLAYED_YET
 
     def __str__(self):
-        opponents = str(self.opponents).strip("[]").replace(", ","+")
+        opponents = str(self.opponents).strip("[]").replace(", ", "+")
         players = f'{self.player} vs {opponents}'
 
         if self.state == self.NOT_PLAYED_YET:
@@ -62,8 +72,8 @@ class TournamentController:
 
     def __init__(self, player_names: list, game_names: list):
 
-        self.games = [Game(id+1, name) for (id, name) in enumerate(game_names)]
-        self.players = [Player(id+1, name) for (id, name) in enumerate(player_names)]
+        self.games = [Game(id + 1, name) for (id, name) in enumerate(game_names)]
+        self.players = [Player(id + 1, name) for (id, name) in enumerate(player_names)]
         self.matches = []
 
     def get_game_by_id(self, game_id: int) -> Game:
@@ -96,9 +106,9 @@ class TournamentController:
 
         return random.choice([player for player in self.players if player.id not in excluded_ids])
 
-    def add_match(self, player_id: int,  opponent_ids: list, game_id: int = None):
+    def add_match(self, player_id: int, opponent_ids: list, game_id: int = None):
 
-        match_id = len(self.matches)+1
+        match_id = len(self.matches) + 1
         player = self.get_player_by_id(player_id)
         prize_score = 0
         opponents = []
@@ -143,6 +153,6 @@ class TournamentController:
                 player_scores[match.player] += match.prize_score
             else:
                 for opponent in match.opponents:
-                    player_scores[opponent] += math.ceil(match.prize_score/len(match.opponents))
+                    player_scores[opponent] += math.ceil(match.prize_score / len(match.opponents))
 
         return player_scores
