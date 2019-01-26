@@ -1,15 +1,19 @@
 import random
 import math
-import re
 
 
-def chk_is_whitespace(name) -> bool:
-    test = re.search(r'\,[ \t]+\,|\,[ \t]+$', name)
-    if test is None:
-        output = False
-    else:
-        output = True
-    return output
+def parse_input_string(msg: str) -> list:
+    """
+    function takes input message as argument
+    and parses input string into collection
+    """
+    names = input(msg).replace(' ', '').split(',')
+
+    for item in names:
+        if len(item) == 0:
+            raise ValueError('One or more of provided values is blank.')
+
+    return names
 
 
 class Player:

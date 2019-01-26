@@ -1,7 +1,7 @@
 import os
 import sys
 import logic
-from logic import chk_is_whitespace
+from logic import parse_input_string
 
 ###
 # METHOD DECLARATION
@@ -72,19 +72,9 @@ def display_menu_options(clear_console_prior: bool = True):
 
 # Read player names and game names and amount of round to be played by each player
 # Added exception handling logic
-player_names = input("Player names (comma separated): ")
+player_names = parse_input_string("Player names (comma separated): ")
 
-if chk_is_whitespace(player_names):
-    raise ValueError('One or more of player names is blank. Please focus next time głuptasie')
-
-player_names = player_names.replace(' ', '').split(',')
-
-game_names = input("Game names (comma separated): ")
-
-if chk_is_whitespace(game_names):
-    raise ValueError('One or more of game names is blank. Please focus next time głuptasie')
-
-game_names = game_names.replace(' ', '').split(',')
+game_names = parse_input_string("Game names (comma separated): ")
 
 round_count = int(input("Round count (default: 1): ") or 1)
 
